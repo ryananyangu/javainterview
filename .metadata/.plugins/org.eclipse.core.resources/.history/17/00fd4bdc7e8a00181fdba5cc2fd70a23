@@ -1,0 +1,11 @@
+package apiretrieve;
+
+public class Department {
+	public Department()
+	{
+		String Name;
+		String Created;
+		String Modified;
+		int Id;
+	}
+}

@@ -1,0 +1,128 @@
+package apiretrieve;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import apiretrieve.Department;
+import apiretrieve.User;
+
+public class Database {
+	public boolean testFunct(String Action, Department depts[],User usrs[])throws Exception{
+		// load the sqlite-JDBC driver using the current class loader
+	      Class.forName("org.sqlite.JDBC");
+
+	      Connection connection = null;
+	      try
+	      {
+	         // create a database connection
+	         connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+
+	         Statement statement = connection.createStatement();
+	         statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+
+	         statement.executeUpdate("DROP TABLE IF EXISTS Department");
+	         statement.executeUpdate("CREATE TABLE Department (departmentId INTEGER, name STRING, description STRING, dateCreated STRING, dateModified STRING)");
+	         
+	         statement.executeUpdate("DROP TABLE IF EXISTS Users");
+	         statement.executeUpdate("CREATE TABLE Users (UserId INTERGER ,departmentId INTEGER, firstname STRING, lastname STRING, dateCreated STRING, dateModified STRING, emailAddress STRING)");
+	         
+//	         this is where the incoming data will be given a variable and looped over
+//	         preferably save the use an interface or a class for each department and user
+	         int department [] = {1,2,3,4};
+	         String departmentNames [] = {"HR","IT","MARKETING","FINANCE"};
+	         String dateCreated [] = {"2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03"};
+	         String dateModified [] = {"2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03"};
+	         String description [] = {"description","description","description","description"};
+	         Database db = new Database();
+	         for(int i=0;i<department.length;i++){
+	        	 db.DepartmentAdd(department[i], departmentNames[i], dateCreated[i], description[i], dateModified[i], con, statement);
+//	              statement.executeUpdate("INSERT INTO Department values(' "++"', '"++"','"++"', '"++"', '"++"')");   
+	         }
+
+	           ResultSet resultSet = statement.executeQuery("SELECT * from Department");
+	           while(resultSet.next())
+	           {
+	              // iterate & read the result set
+	              System.out.println("Id = " + resultSet.getString("departmentId"));
+	              System.out.println("Name = " + resultSet.getInt("name"));
+	              System.out.println("Description = " + resultSet.getInt("description"));
+	              System.out.println("Created = " + resultSet.getInt("dateCreated"));
+	              System.out.println("MOdified = " + resultSet.getInt("dateModified"));
+	           }
+	          }
+
+	     catch(SQLException e){  System.err.println(e.getMessage()); }       
+	      finally {         
+	            try {
+	                  if(connection != null)
+	                     connection.close();
+	                  }
+	            catch(SQLException e) {  // Use SQLException class instead.          
+	               System.err.println(e); 
+	             }
+	      }		
+		return false;
+	}
+	public boolean DepartmentAdd(int dept, String Name, String Created, String Description, String Modified, Connection con, Statement stmnt) throws Exception
+		{
+			stmnt.executeUpdate("INSERT INTO Department values(' "+dept+"', '"+Name+"','"+Description+"', '"+Created+"', '"+Modified+"')");
+			return false;
+		}
+//	    public static void main(String[] args) throws ClassNotFoundException
+//	     {
+//	      // load the sqlite-JDBC driver using the current class loader
+//	      Class.forName("org.sqlite.JDBC");
+//
+//	      Connection connection = null;
+//	      try
+//	      {
+//	         // create a database connection
+//	         connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+//
+//	         Statement statement = connection.createStatement();
+//	         statement.setQueryTimeout(30);  // set timeout to 30 sec.
+//
+//
+//	         statement.executeUpdate("DROP TABLE IF EXISTS Department");
+//	         statement.executeUpdate("CREATE TABLE Department (departmentId INTEGER, name STRING, description STRING, dateCreated STRING, dateModified STRING)");
+//	         
+//	         statement.executeUpdate("DROP TABLE IF EXISTS Users");
+//	         statement.executeUpdate("CREATE TABLE Users (UserId INTERGER ,departmentId INTEGER, firstname STRING, lastname STRING, dateCreated STRING, dateModified STRING, emailAddress STRING)");
+//	         
+////	         this is where the incoming data will be given a variable and looped over
+////	         preferably save the use an interface or a class for each department and user
+//	         int department [] = {1,2,3,4};
+//	         String departmentNames [] = {"HR","IT","MARKETING","FINANCE"};
+//	         String dateCreated [] = {"2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03"};
+//	         String dateModified [] = {"2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03","2018-02-19 09:12:03"};
+//	         String description [] = {"description","description","description","description"};
+//	         for(int i=0;i<department.length;i++){
+//	              statement.executeUpdate("INSERT INTO Department values(' "+department[i]+"', '"+departmentNames[i]+"','"+description[i]+"', '"+dateCreated[i]+"', '"+dateModified[i]+"')");   
+//	         }
+//
+//	           ResultSet resultSet = statement.executeQuery("SELECT * from Department");
+//	           while(resultSet.next())
+//	           {
+//	              // iterate & read the result set
+//	              System.out.println("Id = " + resultSet.getString("departmentId"));
+//	              System.out.println("Name = " + resultSet.getInt("name"));
+//	              System.out.println("Description = " + resultSet.getInt("description"));
+//	              System.out.println("Created = " + resultSet.getInt("dateCreated"));
+//	              System.out.println("MOdified = " + resultSet.getInt("dateModified"));
+//	           }
+//	          }
+//
+//	     catch(SQLException e){  System.err.println(e.getMessage()); }       
+//	      finally {         
+//	            try {
+//	                  if(connection != null)
+//	                     connection.close();
+//	                  }
+//	            catch(SQLException e) {  // Use SQLException class instead.          
+//	               System.err.println(e); 
+//	             }
+//	      }
+//	  }
+ }

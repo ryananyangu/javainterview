@@ -1,0 +1,62 @@
+package apiretrieve;
+import java.io.File;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.FileRequestEntity;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
+
+public class Test2 {
+	/**
+    *
+    * Usage:
+    *          java PostSOAP http://mywebserver:80/ SOAPAction c:\foo.xml
+    *
+    *  @param args command line arguments
+    *                 Argument 0 is a URL to a web server
+    *                 Argument 1 is the SOAP Action
+    *                 Argument 2 is a local filename
+    *
+    */
+   public static void main(String[] args) throws Exception {
+       if (args.length != 3) {
+           System.out.println("Usage: java -classpath <classpath> [-Dorg.apache.commons.logging.simplelog.defaultlog=<loglevel>] PostSOAP <url> <soapaction> <filename>]");
+           System.out.println("<classpath> - must contain the commons-httpclient.jar and commons-logging.jar");
+           System.out.println("<loglevel> - one of error, warn, info, debug, trace");
+           System.out.println("<url> - the URL to post the file to");
+           System.out.println("<soapaction> - the SOAP action header value");
+           System.out.println("<filename> - file to post to the URL");
+           System.out.println();
+           System.exit(1);
+       }
+       // Get target URL
+       String strURL = "https://beep2.cellulant.com:9001/assessments/Company";
+       // Get SOAP action
+       String strSoapAction = "";
+       // Get file to be posted
+       String strXMLFilename = args[2];
+       File input = new File(strXMLFilename);
+       // Prepare HTTP post
+       PostMethod post = new PostMethod(strURL);
+       // Request content will be retrieved directly
+       // from the input stream
+       RequestEntity entity = new FileRequestEntity(input, "text/xml; charset=ISO-8859-1");
+       post.setRequestEntity(entity);
+       // consult documentation for your web service
+       post.setRequestHeader("SOAPAction", strSoapAction);
+       // Get HTTP client
+       HttpClient httpclient = new HttpClient();
+       // Execute request
+       try {
+           int result = httpclient.executeMethod(post);
+           // Display status code
+           System.out.println("Response status code: " + result);
+           // Display response
+           System.out.println("Response body: ");
+           System.out.println(post.getResponseBodyAsString());
+       } finally {
+           // Release current connection to the connection pool once you are done
+           post.releaseConnection();
+       }
+   }
+}

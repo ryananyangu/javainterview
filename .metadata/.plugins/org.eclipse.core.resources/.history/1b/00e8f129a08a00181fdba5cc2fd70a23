@@ -1,0 +1,46 @@
+package apiretrieve;
+//import java.net.HttpURLConnection;
+//import java.nio.charset.StandardCharsets;
+//import java.io.DataOutputStream;
+//import java.net.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost; 
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+public class Requests
+{
+//	String urlParameters  = "param1=a&param2=b&param3=c";
+//	byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+//	int    postDataLength = postData.length;
+//	String request        = "http://example.com/index.php";
+//	URL    url            = new URL( request );
+//
+//}
+//	<web:fetchDepartments/> soapEnvBody
+	public void callWebService(String soapAction, String soapEnvBody) throws Exception {
+	    // Create a StringEntity for the SOAP XML.
+	    String body ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://example.com/v1.0/Records\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><SOAP-ENV:Body>"+soapEnvBody+"</SOAP-ENV:Body></SOAP-ENV:Envelope>";
+	    StringEntity stringEntity = new StringEntity(body, "UTF-8");
+	    stringEntity.setChunked(true);
+	
+	    // Request parameters and other properties.
+	    HttpPost httpPost = new HttpPost("https://beep2.cellulant.com:9001/assessments/Company");
+	    httpPost.setEntity(stringEntity);
+	    httpPost.addHeader("Accept", "text/xml");
+	    httpPost.addHeader("SOAPAction", soapAction);
+	
+	    // Execute and get the response.
+	    HttpClient httpClient = new DefaultHttpClient();
+	    HttpResponse response = httpClient.execute(httpPost);
+	    HttpEntity entity = response.getEntity();
+	
+	    String strResponse = null;
+	    if (entity != null) {
+	        strResponse = EntityUtils.toString(entity);
+	    }
+	}
+}

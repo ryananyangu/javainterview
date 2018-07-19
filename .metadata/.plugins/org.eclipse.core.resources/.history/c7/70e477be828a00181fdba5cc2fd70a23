@@ -1,0 +1,12 @@
+package apiretrieve;
+
+public class User {
+	public User()
+	{
+		String FirstName;
+		String LastName;
+		String DateModified;
+		String DateCreated;
+		int ID;
+	}
+}

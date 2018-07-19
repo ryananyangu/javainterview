@@ -1,0 +1,95 @@
+package apiretrieve;
+// imports to extract the xml from the document
+import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+
+import java.applet.Applet;
+// imports to handle http requests
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+// end of imports
+//custom classes
+import apiretrieve.Department;
+import apiretrieve.User;
+
+public class Apiret {
+//	class variables 
+	public final String USER_AGENT = "Mozilla/5.0";
+	
+	private void get()throws Exception {
+		String url = "https://beep2.cellulant.com:9001/assessments/Company?wsdl";
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		// optional default is GET
+		con.setRequestMethod("GET");
+
+		//add request header
+		con.setRequestProperty("User-Agent", USER_AGENT);
+
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		//print result
+		System.out.println(response.toString());
+
+	}
+	public static void main(String[] args) throws Exception {
+////		testing the get
+//	Apiret http = new Apiret();
+//
+//	System.out.println("Testing 1 - Send Http GET request");
+//	http.get();
+	
+	try {
+        File inputFile = new File("departments.txt");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(inputFile);
+        doc.getDocumentElement().normalize();
+        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+        NodeList nList = doc.getElementsByTagName("return");
+        System.out.println("----------------------------");
+        
+        for (int temp = 0; temp < nList.getLength(); temp++) {
+           Node nNode = nList.item(temp);
+           Department dept = new Department();
+           System.out.println("\nCurrent Element :" + nNode.getNodeName());
+           
+           if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+              Element eElement = (Element) nNode;
+              dept.Id =Integer.parseInt(eElement.getElementsByTagName("departmentID").item(0).getTextContent());
+              dept.Name =eElement.getElementsByTagName("name").item(0).getTextContent();
+              dept.Modified =eElement.getElementsByTagName("dateModified").item(0).getTextContent();
+              dept.Created =eElement.getElementsByTagName("dateCreated").item(0).getTextContent();
+              dept.Description =eElement.getElementsByTagName("description").item(0).getTextContent();
+              
+           }
+        }
+     } catch (Exception e) {
+        e.printStackTrace();
+     }
+  }
+}

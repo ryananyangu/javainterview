@@ -1,0 +1,56 @@
+package apiretrieve;
+import java.io.File;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.FileRequestEntity;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
+
+public class Requests {
+	/**
+    *
+    * Usage:
+    *          java PostSOAP http://mywebserver:80/ SOAPAction c:\foo.xml
+    *
+    *  @param args command line arguments
+    *                 Argument 0 is a URL to a web server
+    *                 Argument 1 is the SOAP Action
+    *                 Argument 2 is a local filename
+    *
+    */
+//	"https://beep2.cellulant.com:9001/assessments/Company"
+//	"getDepartments.xml"
+   public boolean postReq(String filename, String url, String Action) throws Exception {
+       String strURL = url;
+       // Get SOAP action
+       String strSoapAction = Action;
+       // Get file to be posted
+       String strXMLFilename = filename;
+       File input = new File(strXMLFilename);
+       // Prepare HTTP post
+       PostMethod post = new PostMethod(strURL);
+       // Request content will be retrieved directly
+       // from the input stream
+       RequestEntity entity = new FileRequestEntity(input, "text/xml; charset=ISO-8859-1");
+       post.setRequestEntity(entity);
+       // consult documentation for your web service
+       post.setRequestHeader("SOAPAction", strSoapAction);
+       // Get HTTP client
+       HttpClient httpclient = new HttpClient();
+       // Execute request
+       try {
+           int result = httpclient.executeMethod(post);
+           System.out.println("Getting soap data ...");
+           // Display status code
+           System.out.println("Response status code: " + result);
+           // Display response
+           System.out.println("Response body: ");
+           System.out.println(post.getResponseBodyAsStream());
+           System.out.println("Data retrieval is complete ...");
+       } finally {
+           // Release current connection to the connection pool once you are done
+           post.releaseConnection();
+       }
+       return true;
+   }
+}

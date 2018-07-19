@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope
+	xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Body>
+		<ns2:fetchDepartmentsResponse
+			xmlns:ns2="http://WebService/">
+			<return>
+				<dateCreated>2018-02-19 09:11:49</dateCreated>
+				<dateModified>2018-02-19 09:11:49</dateModified>
+				<departmentID>1</departmentID>
+				<description>Human Resource department</description>
+				<name>HR</name>
+			</return>
+			<return>
+				<dateCreated>2018-02-19 09:12:03</dateCreated>
+				<dateModified>2018-02-19 09:12:03</dateModified>
+				<departmentID>2</departmentID>
+				<description>Information Technology department</description>
+				<name>IT</name>
+			</return>
+			<return>
+				<dateCreated>2018-02-19 09:12:03</dateCreated>
+				<dateModified>2018-02-19 09:12:03</dateModified>
+				<departmentID>3</departmentID>
+				<description>Marketing department</description>
+				<name>Marketing</name>
+			</return>
+			<return>
+				<dateCreated>2018-02-19 09:12:03</dateCreated>
+				<dateModified>2018-02-19 09:12:03</dateModified>
+				<departmentID>4</departmentID>
+				<description>Finance department</description>
+				<name>Finance</name>
+			</return>
+		</ns2:fetchDepartmentsResponse>
+	</S:Body>
+</S:Envelope>

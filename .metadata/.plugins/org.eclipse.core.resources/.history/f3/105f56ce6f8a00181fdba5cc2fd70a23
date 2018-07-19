@@ -1,0 +1,46 @@
+<xs:schema xmlns:tns="http://WebService/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://WebService/">
+<xs:element name="departments" type="tns:departments"/>
+<xs:element name="fetchDepartments" type="tns:fetchDepartments"/>
+<xs:element name="fetchDepartmentsResponse" type="tns:fetchDepartmentsResponse"/>
+<xs:element name="fetchStaff" type="tns:fetchStaff"/>
+<xs:element name="fetchStaffResponse" type="tns:fetchStaffResponse"/>
+<xs:element name="staff" type="tns:staff"/>
+<xs:complexType name="fetchStaff">
+<xs:sequence>
+<xs:element name="departmentID" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="fetchStaffResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:staff" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="staff">
+<xs:sequence>
+<xs:element name="dateCreated" type="xs:string" minOccurs="0"/>
+<xs:element name="dateModified" type="xs:string" minOccurs="0"/>
+<xs:element name="departmentID" type="xs:int"/>
+<xs:element name="emailAddress" type="xs:string" minOccurs="0"/>
+<xs:element name="firstName" type="xs:string" minOccurs="0"/>
+<xs:element name="lastName" type="xs:string" minOccurs="0"/>
+<xs:element name="staffID" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="fetchDepartments">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="fetchDepartmentsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:departments" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="departments">
+<xs:sequence>
+<xs:element name="dateCreated" type="xs:string" minOccurs="0"/>
+<xs:element name="dateModified" type="xs:string" minOccurs="0"/>
+<xs:element name="departmentID" type="xs:int" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

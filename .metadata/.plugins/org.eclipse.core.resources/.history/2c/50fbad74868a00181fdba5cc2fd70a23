@@ -1,0 +1,65 @@
+package apiretrieve;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import apiretrieve.Department;
+import apiretrieve.User;
+
+public class Database {
+	public boolean testFunct(Boolean Action, Department depts[],User usrs[])throws Exception{
+		// load the sqlite-JDBC driver using the current class loader
+	      Class.forName("org.sqlite.JDBC");
+
+	      Connection connection = null;
+	      try
+	      {
+	         // create a database connection
+	         connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+
+	         Statement statement = connection.createStatement();
+	         statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+
+	         statement.executeUpdate("DROP TABLE IF EXISTS Department");
+	         statement.executeUpdate("CREATE TABLE Department (Id INTEGER, name STRING, description STRING, Created STRING, Modified STRING)");
+	         
+	         statement.executeUpdate("DROP TABLE IF EXISTS Users");
+	         statement.executeUpdate("CREATE TABLE Users (ID INTERGER ,DeptID INTEGER, FirstName STRING, LastName STRING, DateCreated STRING, DateModified STRING, EmailAddress STRING)");
+	         
+//	         this is where the incoming data will be given a variable and looped over
+	         Database db = new Database();
+	         if(Action) {
+	        	 for(int i=0;i<depts.length;i++){       		 
+		        	 db.DepartmentAdd(depts[i], statement);
+		         }
+	         }else {
+	        	 for(int i=0;i<usrs.length;i++){       		 
+		        	 db.UserAdd(usrs[i], statement);
+		         }
+	         }
+          }
+	     catch(SQLException e){  System.err.println(e.getMessage()); }       
+	      finally {         
+	            try {
+	                  if(connection != null)
+	                     connection.close();
+	                  }
+	            catch(SQLException e) {  // Use SQLException class instead.          
+	               System.err.println(e); 
+	             }
+	      }		
+		return false;
+	}
+	public boolean DepartmentAdd(Department dept, Statement stmnt) throws Exception
+		{
+			stmnt.executeUpdate("INSERT INTO Department values(' "+dept.toString()+"')");
+			return true;
+		}
+	public boolean UserAdd(User usr, Statement stmnt) throws Exception
+	{
+		stmnt.executeUpdate("INSERT INTO Users values(' "+usr.toString()+"')");
+		return true;
+	}
+}
