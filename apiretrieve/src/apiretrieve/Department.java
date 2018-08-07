@@ -16,6 +16,36 @@ public class Department {
 	public Department() {
 		
 	}
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
+	public String getCreated() {
+		return Created;
+	}
+	public void setCreated(String created) {
+		Created = created;
+	}
+	public String getModified() {
+		return Modified;
+	}
+	public void setModified(String modified) {
+		Modified = modified;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
+	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		Id = id;
+	}
 	public Department(String name, String Created, String Modified,String Description, int Id)
 	{
 		  this.Name = name;

@@ -20,6 +20,62 @@ public class User {
 		
 	}
 	
+	public String getFirstName() {
+		return FirstName;
+	}
+
+	public void setFirstName(String firstName) {
+		FirstName = firstName;
+	}
+
+	public String getLastName() {
+		return LastName;
+	}
+
+	public void setLastName(String lastName) {
+		LastName = lastName;
+	}
+
+	public String getEmailAddress() {
+		return EmailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		EmailAddress = emailAddress;
+	}
+
+	public String getDateModified() {
+		return DateModified;
+	}
+
+	public void setDateModified(String dateModified) {
+		DateModified = dateModified;
+	}
+
+	public String getDateCreated() {
+		return DateCreated;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		DateCreated = dateCreated;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public int getDeptID() {
+		return DeptID;
+	}
+
+	public void setDeptID(int deptID) {
+		DeptID = deptID;
+	}
+
 	public User(String FirstName, String LastName, String EmailAddress, String DateModified, String DateCreated, int Id, int DeptID)
 	{
 		this.FirstName = FirstName;
