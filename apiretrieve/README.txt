@@ -15,3 +15,8 @@ CLASSES
 RUNNING APPLICATION:
 	+ The executable version of the application is on the root folder 
 	+ Name appexec.jar
+	
+RUNNING THE APPLICATION MAVEN:
+	+ mvn exec:java -Dexec.mainClass="apiretrieve.Apiret"
+possible maven issue solution
+	- find ~/.m2  -name "*.lastUpdated" -exec grep -q "Could not transfer" {} \; -print -exec rm {} \;
