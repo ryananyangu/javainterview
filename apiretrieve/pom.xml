@@ -12,10 +12,32 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.7.0</version>
         <configuration>
+	        <archive>
+                <manifest>
+                    <mainClass>apiretrieve.Apiret</mainClass>
+                </manifest>
+            </archive>
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>
   </build>
+  <scm>
+  	<developerConnection>Ryan Anyangu</developerConnection>
+  	<url>git@github.com:ryananyangu/javainterview.git</url>
+  	<connection>ssh</connection>
+  </scm>
+  <url>git@github.com:ryananyangu/javainterview.git</url>
+  <issueManagement>
+  	<url>git@github.com:ryananyangu/javainterview.git</url>
+  </issueManagement>
+  <packaging>pom</packaging>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.xerial</groupId>
+  		<artifactId>sqlite-jdbc</artifactId>
+  		<version>3.23.1</version>
+  	</dependency>
+  </dependencies>
 </project>
